@@ -24,7 +24,7 @@ SECRET_KEY = 'b&!_55_-n0p33)lx=#)$@h#9u13kxz%ucughc%k@w_^x0gyz!b'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['gentle-dusk-67310.herokuapp.com','127.0.0.1']
+ALLOWED_HOSTS = ['frozen-island-67494.herokuapp.com','127.0.0.1']
 
 # Application definition
 
@@ -80,10 +80,20 @@ WSGI_APPLICATION = 'digitalReceipt.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'd6rgd2bs9ojef5',
+        'USER': 'jpiwhhpyjyqkch',
+        'PASSWORD': 'bc33b4721e762b0b59e4cdc1be9a5b00cdcdad34fc85d7749d2a1ecdf9b9ad4c',
+        'HOST': 'ec2-34-230-231-71.compute-1.amazonaws.com',
+        'PORT': '5432',
 }
+}
+
+import dj_database_url
+
+db_from_env = dj_database_url.config(conn_max_age=600, ssl_require=True)
+DATABASES['default'].update(db_from_env) 
+#dj_database_url.config(default='postgres://...'}
 
 REST_FRAMEWORK = {
     'DEFAULT AUTHENTICATION_CLASSES':(
@@ -133,6 +143,14 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "static"),
+)
+STATIC_ROOT = os.path.join(BASE_DIR, "live-static-files", "static-root")
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "live-static-files", "media-root")
 
 
 # No security issues occur in email the given password here is an app password
